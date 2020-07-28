@@ -1,0 +1,178 @@
+openapi: "3.0.1"
+info:
+  title: "Restic Restore Server"
+  description: |
+    ...
+  version: 1.0.0
+servers:
+  - url: http://localhost:80
+paths:
+  /snapshots:
+    get:
+      # tags:
+      #   - instances
+      operationId: getSnapshots
+      description: |
+        List all snapshots
+      x-eov-operation-handler: handlers/DefaultController
+      # parameters:
+      #   - $ref: '#/components/parameters/userIdQueryParam'
+      responses:
+        200:
+          description: |
+            List all available snapshots
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/SnapshotList'
+  /snapshots/{shortId}/restore:
+    get:
+      # tags:
+      #   - instances
+      operationId: restoreSnapshot
+      parameters:
+        - $ref: '#/components/parameters/shortIdParam'
+      description: |
+        Executes an restore based on the **short_id**
+      x-eov-operation-handler: handlers/DefaultController
+      # parameters:
+      #   - $ref: '#/components/parameters/userIdQueryParam'
+      responses:
+        200:
+          description: |
+            Snapshot restored successfully
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/SnapshotList'
+        404:
+          description: |
+            Snapshot id not found
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/FoundError'
+components:
+  parameters:
+    shortIdParam:
+      in: path
+      name: shortId
+      description: Snapshot id Query Parameter.
+      required: true
+      schema:
+        type: string
+  schemas:
+    Error:
+      required:
+        - message
+      properties:
+        message:
+          type: string
+    FoundError:
+      required:
+        - message
+      properties:
+        message:
+          type: string
+          example: Not Found
+#     AuthError:
+#       required:
+#         - message
+#       properties:
+#         message:
+#           type: string
+#           example: Unauthorized
+    ValidationError:
+      required:
+        - message
+        - validationErrors
+      properties:
+        message:
+          type: string
+          example: request.query should have required property 'shortId'
+        errors:
+          type: object
+          properties:
+            path:
+              type: string
+              example: .query.shortId
+            message:
+              type: string
+              example: should have required property 'shortId'
+            errorCode:
+              type: string
+              example: required.openapi.validation
+    SnapshotList:
+      additionalProperties: false
+      type: array
+      items:
+        $ref: '#/components/schemas/Snapshot'
+    Snapshot:
+      additionalProperties: false
+      type: object
+      required:
+        - id
+        - short_id
+        - time
+        - username
+        - hostname
+        - tags
+        - tree
+        - paths
+      properties:
+        id:
+          type: string
+          example: 15051ed1ea1d267c7f82ac0de63c0b1c3eafa4e3b7899f965fd23a50b009b2d6
+          description: ID of the snapshot
+        short_id:
+          type: string
+          example: 15051ed1
+          description: Short ID of the snapshot
+        time:
+          type: string
+          example: '"2020-05-29T17:49:00.136672148Z'
+          description: Time when the snapshot was taken
+        username:
+          type: string
+          example: 'root'
+          description: Username of ...
+        hostname:
+          type: string
+          example: 'f1520eccaf43'
+          description: The Host ???
+        tree:
+          type: string
+          description: The Tree ...
+          example: b2325742d7eb352315fda12205883d66dacae46601ecc0067d1f0f94f577ac52
+        tags:
+          type: array
+          description: List of tags
+          items:
+            type: string
+            example: test
+        paths:
+          type: array
+          description: List of tags
+          items:
+            type: string
+            example: /data
+#     userId:
+#       additionalProperties: false
+#       type: string
+#       description: Simple user name. Please use your user name from the system.
+#       example: martin
+#       pattern: "[a-zA-Z0-9]{2,64}"
+#       minLength: 2
+#       maxLength: 64
+#     alfInstanceId:
+#       additionalProperties: false
+#       type: string
+#       description: User Instance Identifier created with node uuid
+#       pattern: "[a-z0-9]{4,4}"
+#       example: 'ew2m'
+#       minLength: 4
+#       maxLength: 4
+#     status:
+#       additionalProperties: false
+#       type: string
+#       description: Shows the current state. Even if your instance is in the running state it might take some minutes until the provided url is reachable.
