@@ -21,10 +21,10 @@ jobs:
       uses: actions/setup-node@v1.4.2
     - name: Execute start.sh
       run: |
-        mkdir -p data/solr-data
-        mkdir -p logs/postgres
-        sudo chown -R 33007 data/solr-data
-        sudo chown -R 999 logs/postgres
+        mkdir -p restic-volume/data/solr-data
+        mkdir -p restic-volume/logs/postgres
+        sudo chown -R 33007 restic-volume/data/solr-data
+        sudo chown -R 999 restic-volume/logs/postgres
         chmod +x start.sh && ./start.sh
     - name: Docker Compose deployment has failed
       if: ${{ failure() }}

@@ -53,7 +53,7 @@ services:
                 -Xms1856m -Xmx1856m
             '
         volumes:
-            - ./data/alf-repo-data:/usr/local/tomcat/alf_data
+            - ./restic-volume/data/alf-repo-data:/usr/local/tomcat/alf_data:z
             - ./logs/alfresco:/usr/local/tomcat/logs
 
 
@@ -131,9 +131,8 @@ services:
         ports:
             - 5432:5432
         volumes:
-            - ./data/postgres-data:/var/lib/postgresql/data
-            - ./logs/postgres:/var/log/postgresql
-
+            - ./restic-volume/data/postgres-data:/var/lib/postgresql/data:z
+            # - ./logs/postgres:/var/log/postgresql
 
     solr6:
         build:
@@ -160,7 +159,7 @@ services:
                 -XX:MaxNewSize=336m
             "
         volumes:
-            - ./data/solr-data:/opt/alfresco-search-services/data
+            - ./restic-volume/data/solr-data:/opt/alfresco-search-services/data:z
 
     activemq:
         image: alfresco/alfresco-activemq:${ACTIVEMQ_TAG}
@@ -194,27 +193,25 @@ services:
         # - ./config/cert/localhost.cer:/etc/nginx/localhost.cer
         # - ./config/cert/localhost.key:/etc/nginx/localhost.key
       ports:
-        - 80:80
+        - 8080:80
 
     restic:
+      # depends_on:
+      #   - alfresco
       build: .
       environment:
         RESTIC_PASSWORD: test
         RESTIC_TAG: test
         RESTIC_FORGET_ARGS: '--prune --keep-last 3 --keep-hourly 24 --keep-daily 7 --keep-weekly 52 --keep-monthly 120 --keep-yearly 10'
         BACKUP_CRON: '* * * * *'
+        BACKUP_VOLUME: '/restic-volume'
+        BACKUP_FOLDER: 'data'
         # MAILX_ARGS: ''
         # RESTIC_REPOSITORY: '' S3 here
         # AWS_ACCESS_KEY_ID: ''
         # AWS_SECRET_ACCESS_KEY: ''
       volumes:
-        - ./data:/data
+        - ./restic-volume:/restic-volume
         - ./test-repo/:/mnt/restic
       ports:
-        - "81:3000"
-
-
-
-
-
-
+        - "8081:3000"

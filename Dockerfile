@@ -21,9 +21,21 @@ ENV BACKUP_CRON="0 */6 * * *"
 ENV RESTIC_FORGET_ARGS=""
 ENV RESTIC_JOB_ARGS=""
 ENV MAILX_ARGS=""
+ENV BACKUP_VOLUME="/restic-volume"
+ENV BACKUP_FOLDER="data"
 
-# /data is the dir where you have to put the data to be backed up
-VOLUME /data
+# ARG USER=postgres
+# ARG UID=999
+# ARG GID=999
+# RUN mkdir -p restic-volume/data/postgres-data
+# RUN chown -R $UID restic-volume/data/postgres-data
+
+# ARG SOLR_UID=33007
+# RUN mkdir -p /data/solr-data
+# RUN chown -R $SOLR_UID /data/solr-data
+# USER postgres
+
+VOLUME ${BACKUP_VOLUME}
 
 WORKDIR /usr/src/app
 

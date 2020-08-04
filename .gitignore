@@ -1,5 +1,10 @@
 node_modules
 
 # volumes
-data
+# data
 logs
+
+# auto generated
+restic-volume
+test-repo
+server
