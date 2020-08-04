@@ -1,5 +1,5 @@
 {
-  "name": "alf-ec2-1",
+  "name": "alf-ec2-2",
   "version": "1.0.0",
   "description": "",
   "main": "index.js",
@@ -8,15 +8,12 @@
   },
   "repository": {
     "type": "git",
-    "url": "git+ssh://git@github.com/mmuller88/alf-ec2-1.git"
+    "url": "git+ssh://git@github.com/mmuller88/alf-ec2-2.git"
   },
   "author": "",
   "license": "ISC",
   "bugs": {
     "url": "https://github.com/mmuller88/alf-ec2-1/issues"
   },
-  "homepage": "https://github.com/mmuller88/alf-ec2-1#readme",
-  "dependencies": {
-    "wait-on": "^4.0.1"
-  }
+  "homepage": "https://github.com/mmuller88/alf-ec2-1#readme"
 }

@@ -6,7 +6,7 @@ Alf Docker Compose Deployment with restic Docker test
 ## Permissions
 sudo chown -R 33007 data/solr-data
 sudo chown -R 999 logs/postgres
-sudo chown -R 999 data/postgres-data
+sudo chown -R 999 restic-volume/data/postgres-data
 
 sudo chown -R 449 test-repo
 
