@@ -1,0 +1,168 @@
+{
+	"info": {
+		"_postman_id": "135024e1-f368-46ac-8994-e64751fc69e3",
+		"name": "alf-backup",
+		"schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json"
+	},
+	"item": [
+		{
+			"name": "Test Search",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"id": "db6027f6-c647-4048-871c-0b74f18ac01c",
+						"exec": [
+							"pm.test(\"Status code is 200\", function () {",
+							"    pm.response.to.have.status(200);",
+							"});"
+						],
+						"type": "text/javascript"
+					}
+				}
+			],
+			"protocolProfileBehavior": {
+				"disabledSystemHeaders": {}
+			},
+			"request": {
+				"auth": {
+					"type": "basic",
+					"basic": [
+						{
+							"key": "password",
+							"value": "admin",
+							"type": "string"
+						},
+						{
+							"key": "username",
+							"value": "admin",
+							"type": "string"
+						}
+					]
+				},
+				"method": "POST",
+				"header": [
+					{
+						"key": "Accept",
+						"value": "application/json",
+						"type": "text"
+					}
+				],
+				"body": {
+					"mode": "raw",
+					"raw": "{\n  \"query\": {\n    \"query\": \"foo\"\n  }\n}",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "http://localhost:8080/alfresco/api/-default-/public/search/versions/1/search",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"port": "8080",
+					"path": [
+						"alfresco",
+						"api",
+						"-default-",
+						"public",
+						"search",
+						"versions",
+						"1",
+						"search"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Create fileA.txt",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"id": "ba110103-6baf-467e-8596-e5414b22884d",
+						"exec": [
+							"pm.test(\"Status code is 201\", function () {",
+							"    pm.response.to.have.status(201);",
+							"});",
+							"",
+							"var data = pm.response.json();",
+							"",
+							"pm.globals.set(\"nodeId\", data.entry.id);"
+						],
+						"type": "text/javascript"
+					}
+				}
+			],
+			"protocolProfileBehavior": {
+				"disabledSystemHeaders": {}
+			},
+			"request": {
+				"auth": {
+					"type": "basic",
+					"basic": [
+						{
+							"key": "password",
+							"value": "admin",
+							"type": "string"
+						},
+						{
+							"key": "username",
+							"value": "admin",
+							"type": "string"
+						}
+					]
+				},
+				"method": "POST",
+				"header": [
+					{
+						"key": "Accept",
+						"type": "text",
+						"value": "application/json"
+					}
+				],
+				"body": {
+					"mode": "formdata",
+					"formdata": [
+						{
+							"key": "filedata",
+							"type": "file",
+							"src": "./test/fileA.txt"
+						}
+					],
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "http://localhost:8080/alfresco/api/-default-/public/search/versions/1/nodes/-my-/children",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"port": "8080",
+					"path": [
+						"alfresco",
+						"api",
+						"-default-",
+						"public",
+						"search",
+						"versions",
+						"1",
+						"nodes",
+						"-my-",
+						"children"
+					]
+				}
+			},
+			"response": []
+		}
+	],
+	"protocolProfileBehavior": {}
+}
