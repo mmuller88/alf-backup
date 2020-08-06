@@ -214,7 +214,7 @@
 						{
 							"key": "filedata",
 							"type": "file",
-							"src": "./test/fileA.txt"
+							"src": "./test/fileB.txt"
 						}
 					],
 					"options": {
