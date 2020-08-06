@@ -131,7 +131,7 @@
 						{
 							"key": "filedata",
 							"type": "file",
-							"src": "./test/fileA.txt"
+							"src": "/home/martin/git/alf-backup/test/fileA.txt"
 						}
 					],
 					"options": {
@@ -141,7 +141,7 @@
 					}
 				},
 				"url": {
-					"raw": "http://localhost:8080/alfresco/api/-default-/public/search/versions/1/nodes/-my-/children",
+					"raw": "http://localhost:8080/alfresco/api/-default-/public/alfresco/versions/1/nodes/-my-/children",
 					"protocol": "http",
 					"host": [
 						"localhost"
@@ -152,7 +152,7 @@
 						"api",
 						"-default-",
 						"public",
-						"search",
+						"alfresco",
 						"versions",
 						"1",
 						"nodes",
